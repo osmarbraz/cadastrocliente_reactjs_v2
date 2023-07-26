@@ -25,7 +25,7 @@ function Layout(){
             </Link>
           </li>         
           <li>
-            <Link to="/listarcliente">
+            <Link to="/frmlistarcliente">
               Listar(Alterar, Excluir)
             </Link>
           </li>          
@@ -63,7 +63,6 @@ function FrmCadastroCliente(){
   const { alterarId } = useParams();
 
   // Estados inciais das variáveis do componente   
-  //const [clienteId, setClienteId] = useState(0);
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [resultado, setResultado] = useState('');  
@@ -71,14 +70,14 @@ function FrmCadastroCliente(){
   // Renderiza a lista de clientes.
   useEffect(() => {
     
+    // Recupera um cliente para alteração
     const getCliente = async () => {
       //Se foi passado um parametro
       if (alterarId > 0) {      
         //Consulta o cliente
         const response = await fetch(`${endereco_servidor}/cliente/${alterarId}`);
         const data = await response.json();
-        //Atualiza os dados
-        //setClienteId(data.clienteId);
+        //Atualiza os dados        
         setNome(data.nome);
         setCpf(data.cpf);
       }      
@@ -120,7 +119,6 @@ function FrmCadastroCliente(){
     event.preventDefault();   
     
     const dados =  { 
-          //'clienteId': clienteId,
           'nome': nome,
           'cpf': cpf
     };
@@ -138,8 +136,7 @@ function FrmCadastroCliente(){
   };
 
   // Limpa os campos do formulário.     
-  const limpar = () => { 
-    //setClienteId(0);
+  const limpar = () => {     
     setNome('');
     setCpf('');
   };
@@ -157,7 +154,7 @@ function FrmCadastroCliente(){
           <input type="submit" name="Cadastrar" value="Cadastrar"/><br/><br/>
           <label>Resultado: {resultado} </label>
       </form>
-      </>
+    </>
   );
 };
 
@@ -197,11 +194,11 @@ function FrmExcluirCliente() {
 }
 
 /**
- * Opção 1 do menu.
+ * Componente de listagem de clientes.
  * 
  * @returns 
  */
-function ListarCliente(){
+function FrmListarCliente(){
   
   // Estados inciais das variáveis do componente
   const navigate = useNavigate();
@@ -209,7 +206,6 @@ function ListarCliente(){
   
   // Renderiza a lista de clientes.
   useEffect(() => {
-
     // Busca os clientes cadastrados no servidor.
     const getClientes = () => {
       fetch(`${endereco_servidor}/cliente`)
@@ -259,7 +255,7 @@ function MenuPrincipal() {
           <Route path='/' element={<Layout />}>
             <Route path='frmcadastroCliente/:alterarId' element={<FrmCadastroCliente />} />
             <Route path='frmexcluircliente/:clienteId' element={<FrmExcluirCliente />} />
-            <Route path='listarcliente' element={<ListarCliente />} />                
+            <Route path='frmlistarcliente' element={<FrmListarCliente />} />
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>        
