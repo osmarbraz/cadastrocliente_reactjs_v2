@@ -150,7 +150,7 @@ function FrmCadastroCliente(){
           <input type="text" size="60" id="nome" name="nome" value={nome} onChange={(event) => setNome(event.target.value)} /></label><br/>
           <label>CPF: 
           <input type="text" size="15" id="cpf" name="cpf" value={cpf} onChange={(event) => setCpf(event.target.value)} /></label><br/><br/>
-          <input type="button" value="Limpar"  onClick={limpar} />
+          <input type="button" name="Limpar" value="Limpar" onClick={limpar} />
           <input type="submit" name="Cadastrar" value="Cadastrar"/><br/><br/>
           <label>Resultado: {resultado} </label>
       </form>
@@ -208,7 +208,7 @@ function FrmListarCliente(){
   useEffect(() => {
     // Busca os clientes cadastrados no servidor.
     const getClientes = () => {
-      fetch(`${endereco_servidor}/cliente`)
+      fetch(`${endereco_servidor}/clientes`)
         .then(response => {return response.json()}) //Converte a resposta para JSON
         .then(data => {setClientes(data)}) // Atribui a resposta ao cliente
     };
